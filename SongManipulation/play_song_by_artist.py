@@ -2,6 +2,7 @@
 from gmusicapi import Mobileclient
 from gmusicapi import Musicmanager
 import re
+import os.path
 
 # import vlc
 
@@ -18,7 +19,7 @@ song_location = 'C:\\Users\\JP\Music\\Downloaded Music\\'
 def play_song_by_artist(song="Raindrop", artist="Chopin"):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
-        # mm.perform_oauth('C:\Users\JP\Python\oauth.cred')
+        # mm.perform_oauth('C:\\Users\\JP\\Python\\oauth.cred')
         mm.login('C:\\Users\\JP\\Python\\oauth.cred')
         if Musicmanager.is_authenticated(mm):
             print 'MM is authenticated.'
@@ -37,11 +38,20 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                     print 'Song found!'
                     song_id = song['id']
                     filename, audio = mm.download_song(song_id)
-                    # TODO
-                    # check if song already exists in song_location, no need to download again
-                    # just play
-                    with open(song_location + filename, 'wb') as f:
-                        f.write(audio)
+
+                    # check if song is already downloaded
+                    try:
+                        print song_location + filename
+                        if os.path.isfile(song_location + filename):
+                            print 'Song is already downloaded...'
+                            print 'Playing song.'
+                            break
+                        else:
+                            with open(song_location + filename, 'wb') as f:
+                                f.write(audio)
+                    except (OSError, IOError):
+                        print 'An error has occurred.'
+                        break
 
                     # TODO
                     # vlc.MediaPlayer.play(filename)
