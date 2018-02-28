@@ -13,7 +13,7 @@ gpm.login('jpage628@gmail.com', pw, Mobileclient.FROM_MAC_ADDRESS)
 # User note: always 'escape' the backslashes, or we may get special characters
 # 'D:\testfolder' would translate the \t into a tab, for example:
 # 'D:    estfolder'
-song_location = 'D:\\Users\\JP\\Dump\\'
+song_location = 'C:\\Users\\JP\Music\\Downloaded Music\\'
 
 
 def play_song(song="Raindrop"):
