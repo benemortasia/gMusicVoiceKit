@@ -24,14 +24,17 @@ def play_song(song="Raindrop"):
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
             song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
+            
             for song in song_dict:
                 m = re.match(song_pattern, song['title'])
                 print m
                 print song_dict.pop()
+                
                 if re.match(song_pattern, song['title']) is not None:
                     print 'Song found!'
                     song_id = song['id']
                     filename, audio = mm.download_song(song_id)
+                    
                     # check if song is already downloaded
                     try:
                         print song_location + filename
