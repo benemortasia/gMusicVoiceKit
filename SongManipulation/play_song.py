@@ -33,7 +33,7 @@ def play_song(song="Raindrop"):
                     print 'Song found!'
                     song_id = song['id']
                     filename, audio = mm.download_song(song_id)
-
+                    
                     # get rid of non-ascii characters in file name
                     filename = filename.encode('ascii', errors='ignore')
                     
