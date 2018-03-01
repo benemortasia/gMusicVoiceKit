@@ -9,7 +9,7 @@ import vlc
 gpm = Mobileclient()
 # Login with username, password, and MAC.
 # MAC helps Google Play Services identify the device
-gpm.login('jpage628@gmail.com', '_c0mplex', Mobileclient.FROM_MAC_ADDRESS)
+gpm.login('jpage628@gmail.com', pw, Mobileclient.FROM_MAC_ADDRESS)
 # User note: always 'escape' the backslashes, or we may get special characters
 # 'D:\testfolder' would translate the \t into a tab, for example:
 # 'D:    estfolder'
