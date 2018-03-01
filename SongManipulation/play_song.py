@@ -9,7 +9,7 @@ import vlc
 gpm = Mobileclient()
 # Login with username, password, and MAC.
 # MAC helps Google Play Services identify the device
-gpm.login('jpage628@gmail.com', '_c0mplex', Mobileclient.FROM_MAC_ADDRESS)
+gpm.login('jpage628@gmail.com', pw, Mobileclient.FROM_MAC_ADDRESS)
 # User note: always 'escape' the backslashes, or we may get special characters
 # 'D:\testfolder' would translate the \t into a tab, for example:
 # 'D:    estfolder'
@@ -28,24 +28,15 @@ def play_song(song="Raindrop"):
             for song in song_dict:
                 m = re.match(song_pattern, song['title'])
                 print m
-<<<<<<< HEAD
-
-=======
-                print song_dict.pop()
                 
->>>>>>> origin/master
                 if re.match(song_pattern, song['title']) is not None:
                     print 'Song found!'
                     song_id = song['id']
                     filename, audio = mm.download_song(song_id)
-<<<<<<< HEAD
 
                     # get rid of non-ascii characters in file name
                     filename = filename.encode('ascii', errors='ignore')
-
-=======
                     
->>>>>>> origin/master
                     # check if song is already downloaded
                     # path will look something like:
                     # C:\\Users\\JP\Music\\Downloaded Music\\02 - Raindrop Prelude.mp3
