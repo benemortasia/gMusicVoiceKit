@@ -77,7 +77,7 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
         Mobileclient.logout(gpm)
         mm.logout()
     else:
-        print 'Mobile client is not authenticated.'
+        print 'Mobile client is not authenticated.' 
 
 
 play_song_by_artist()
