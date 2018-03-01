@@ -24,18 +24,28 @@ def play_song(song="Raindrop"):
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
             song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
+            
             for song in song_dict:
                 m = re.match(song_pattern, song['title'])
                 print m
+<<<<<<< HEAD
 
+=======
+                print song_dict.pop()
+                
+>>>>>>> origin/master
                 if re.match(song_pattern, song['title']) is not None:
                     print 'Song found!'
                     song_id = song['id']
                     filename, audio = mm.download_song(song_id)
+<<<<<<< HEAD
 
                     # get rid of non-ascii characters in file name
                     filename = filename.encode('ascii', errors='ignore')
 
+=======
+                    
+>>>>>>> origin/master
                     # check if song is already downloaded
                     # path will look something like:
                     # C:\\Users\\JP\Music\\Downloaded Music\\02 - Raindrop Prelude.mp3
