@@ -32,7 +32,6 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
             for song in song_dict:
                 m = re.match(artist_pattern, song['artist'])
                 print m
-                print song_dict.pop()
 
                 if (re.match(song_pattern, song['title']) is not None and
                         re.match(artist_pattern, song['artist']) is not None):
