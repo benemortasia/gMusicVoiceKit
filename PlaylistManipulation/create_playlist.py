@@ -10,6 +10,7 @@ gpm.login('jpage628@gmail.com', pw, Mobileclient.FROM_MAC_ADDRESS)
 def create_playlist(playlist_name="Default Playlist Title"):
 
     if Mobileclient.is_authenticated(gpm):
+        # the following prints all playlist names
         all_playlists = Mobileclient.get_all_playlists(gpm)
         for playlist in all_playlists:
             print playlist
@@ -17,7 +18,7 @@ def create_playlist(playlist_name="Default Playlist Title"):
             temp.add(playlist['name'])
 
         print temp
-        # gpm.create_playlist(playlist_name)
+        gpm.create_playlist(playlist_name)
     else:
         print "The Mobileclient is not authenticated."
 
