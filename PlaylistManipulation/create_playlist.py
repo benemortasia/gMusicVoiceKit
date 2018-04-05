@@ -1,28 +1,34 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from gmusicapi import Mobileclient
 
+__author__ = "Jordan Page"
+__license__ = "MIT"
+__version__ = "1.0.0"
+
 gpm = Mobileclient()
-# Login with username, password, and MAC.
+
 # MAC helps Google Play Services identify the device
-gpm.login('jpage628@gmail.com', pw, Mobileclient.FROM_MAC_ADDRESS)
+# *** Change EXAMPLE and PASSWORD to your own Gmail login. ***
+gpm.login('EXAMPLE@gmail.com', 'PASSWORD', Mobileclient.FROM_MAC_ADDRESS)
 
 
 def create_playlist(playlist_name="Default Playlist Title"):
 
     if Mobileclient.is_authenticated(gpm):
+        # the following prints all playlist names
         all_playlists = Mobileclient.get_all_playlists(gpm)
         for playlist in all_playlists:
-            print playlist
+            # print(playlist)
             temp = set()
             temp.add(playlist['name'])
+            # print(temp)
 
-        print temp
-        # gpm.create_playlist(playlist_name)
+        return gpm.create_playlist(playlist_name)
     else:
-        print "The Mobileclient is not authenticated."
+        print("The Mobileclient is not authenticated.")
+
 
     Mobileclient.logout(gpm)
 
-
-# this will change based on voice input
-create_playlist("A playlist name")
+if __name__ == '__main__':
+    create_playlist()
