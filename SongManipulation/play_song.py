@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from gmusicapi import Mobileclient
 from gmusicapi import Musicmanager
 import re
