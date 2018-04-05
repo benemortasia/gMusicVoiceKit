@@ -23,7 +23,12 @@ def create_playlist(playlist_name="Default Playlist Title"):
             temp.add(playlist['name'])
             # print(temp)
 
+<<<<<<< HEAD
         return gpm.create_playlist(playlist_name)
+=======
+        print temp
+        gpm.create_playlist(playlist_name)
+>>>>>>> origin/master
     else:
         print("The Mobileclient is not authenticated.")
 
