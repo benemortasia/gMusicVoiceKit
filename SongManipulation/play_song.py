@@ -33,6 +33,7 @@ def play_song(song="Never Forget"):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
         mm.login('/home/pi/oauth.cred')
+        
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
             song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
