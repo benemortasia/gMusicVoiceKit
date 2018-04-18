@@ -131,7 +131,6 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
         mm.logout()
     else:
         print('Mobile client is not authenticated.')
-        break
 
 class OnButtonPress(object):
     
