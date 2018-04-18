@@ -24,7 +24,7 @@ gpm = Mobileclient()
 # MAC helps Google Play Services identify the device
 # *** Change EXAMPLE and PASSWORD to your own Gmail login. ***
 
-gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
+gpm.login('jpage628@gmail.com', '_c0mplex',
           Mobileclient.FROM_MAC_ADDRESS)
 
 # If using Windows, always 'escape' the backslashes, or we may get special characters
@@ -34,7 +34,7 @@ gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
 song_location = '/home/pi/Music/'
 
 
-def play_song_by_artist(song="Raindrop", artist="Chopin"):
+def play_song_by_artist(song, artist):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
         mm.login('/home/pi/oauth.cred')
@@ -92,8 +92,8 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                                 duration = p.get_time() / 1000
                                 (m, s) = divmod(duration, 60)
 
-                                print("Current song is: ", path)
-                                print("Length:", "%02d:%02d" % (m, s))
+                                print('Current song is: ', path)
+                                print('Length:', '%02d:%02d' % (m, s))
                                 time.sleep(5)
 
                             p.stop()
@@ -130,16 +130,16 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                         break
 
                 else:
-                    
                     print('Song not found yet.')
+
         else:
-          
             print('Looks like you need to authenticate.')
             mm.perform_oauth('/home/pi/oauth.cred')
 
         print('Logging out.')
         Mobileclient.logout(gpm)
         mm.logout()
+
     else:
         print('Mobile client is not authenticated.')
 
@@ -168,12 +168,15 @@ class OnButtonPress(object):
         print('Button was pressed.')
         global finish
         finish = 1
-        
+
 
 def SongFinished(event):
     global finish
     print('Finished playing song.')
     finish = 1
-      
+
+
+# Useful if you want to test this function independently of cloudspeech
+# Replace 'Raindrop' and 'Chopin' with some other song-artist combination you may have
 if __name__ == '__main__':
-    play_song_by_artist()
+    play_song_by_artist('Raindrop', 'Chopin')
