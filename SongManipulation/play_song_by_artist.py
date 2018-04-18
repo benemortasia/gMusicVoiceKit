@@ -34,7 +34,7 @@ gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
 song_location = '/home/pi/Music/'
 
 
-def play_song_by_artist(song="Raindrop", artist="Chopin"):
+def play_song(song='Never Forget'):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
         mm.login('/home/pi/oauth.cred')
@@ -43,18 +43,15 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
             song_dict = mm.get_purchased_songs()
             song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song)
                     + r')\s?(?:.)*', re.IGNORECASE)
-            artist_pattern = re.compile(r'(?:.)*\s?(' + re.escape(artist)
-                    + r')\s?(?:.)*', re.IGNORECASE)
 
             btn = OnButtonPress()
             btn.start()
 
             for song in song_dict:
-                m = re.match(artist_pattern, song['artist'])
+                m = re.match(song_pattern, song['title'])
                 print(m)
 
-                if (re.match(song_pattern, song['title']) is not None and
-                        re.match(artist_pattern, song['artist']) is not None):
+                if re.match(song_pattern, song['title']) is not None:
                     print('Song found!')
                     song_id = song['id']
                     (filename, audio) = mm.download_song(song_id)
@@ -92,8 +89,8 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                                 duration = p.get_time() / 1000
                                 (m, s) = divmod(duration, 60)
 
-                                print("Current song is: ", path)
-                                print("Length:", "%02d:%02d" % (m, s))
+                                print('Current song is: ', path)
+                                print('Length:', '%02d:%02d' % (m, s))
                                 time.sleep(5)
 
                             p.stop()
@@ -111,16 +108,17 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
 
                             p.set_media(media)
                             events = p.event_manager()
-                            events.event_attach(vlc.EventType.MediaPlayerEndReached, SongFinished)
+                            events.event_attach(vlc.EventType.MediaPlayerEndReached,
+                                    SongFinished)
                             p.play()
                             p.audio_set_volume(58)
 
                             while finish == 0:
                                 duration = p.get_time() / 1000
-                                m, s = divmod(duration, 60)
+                                (m, s) = divmod(duration, 60)
 
                                 print('Current song is: ', path)
-                                print('Length:', '%02d:%02d' % (m,s))
+                                print('Length:', '%02d:%02d' % (m, s))
                                 time.sleep(5)
 
                             p.stop()
@@ -128,22 +126,19 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                     except (OSError, IOError):
                         print('An error has occurred.')
                         break
-
                 else:
-                    print('Song not found.')
-                    Mobileclient.logout(gpm)
-        			mm.logout()
-                    break
+
+                    print('Song not found yet.')
         else:
+
             print('Looks like you need to authenticate.')
             mm.perform_oauth('/home/pi/oauth.cred')
 
         print('Logging out.')
         Mobileclient.logout(gpm)
         mm.logout()
-
     else:
-        print('Mobile client is not authenticated.')
+        print('Mobileclient could not authenticate.')
 
 
 class OnButtonPress(object):
@@ -170,12 +165,13 @@ class OnButtonPress(object):
         print('Button was pressed.')
         global finish
         finish = 1
-        
+
 
 def SongFinished(event):
     global finish
     print('Finished playing song.')
     finish = 1
-      
+
+
 if __name__ == '__main__':
-    play_song_by_artist()
+    play_song()
