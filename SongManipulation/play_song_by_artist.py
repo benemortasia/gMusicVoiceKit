@@ -33,10 +33,12 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
         mm.login('/home/pi/oauth.cred')
+	
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
 	    song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
             artist_pattern = re.compile(r'(?:.)*\s?(' + re.escape(artist) + r')\s?(?:.)*', re.IGNORECASE)
+	
             btn = OnButtonPress()
             btn.start()
 
@@ -53,13 +55,13 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                     # get rid of non-ascii characters in file name
                     filename = filename.encode('ascii', errors='ignore')
 
-                    # also make sure that filename is a string
+                    # check if song is already downloaded
+                    # path will look something like:
+                    # /home/pi/Music/02 - Raindrop Prelude.mp3
+		    # forces filename to be a string
                     filename = filename.decode('ascii')
                     path = song_location + filename
                     try:
-                        # check if song is already downloaded
-                        # path will look something like:
-                        # home/pi/Music/02 - Raindrop Prelude.mp3
                         if os.path.isfile(path):
                             print('Song is already downloaded...')
                             print(path)
@@ -119,9 +121,7 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
 
                 else:
                     print('Song not found yet.')
-                    Mobileclient.logout(gpm)
-        			mm.logout()
-                    break
+		
         else:
             print('Looks like you need to authenticate.')
             mm.perform_oauth('/home/pi/oauth.cred')
@@ -129,7 +129,6 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
         print('Logging out.')
         Mobileclient.logout(gpm)
         mm.logout()
-        break
     else:
         print('Mobile client is not authenticated.')
         break
@@ -166,3 +165,4 @@ def SongFinished(event):
       
 if __name__ == '__main__':
     play_song_by_artist()
+
