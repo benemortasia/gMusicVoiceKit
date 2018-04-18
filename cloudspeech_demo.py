@@ -19,8 +19,6 @@ import aiy.audio
 import aiy.cloudspeech
 import aiy.voicehat
 import re
-
-# *** Change the path if the gMusicVoiceKit package is cloned elsewhere. ***
 import sys
 sys.path.append('/home/pi/AIY-voice-kit-python/src/gMusicVoiceKit')
 from SongManipulation.play_song import play_song
@@ -33,13 +31,16 @@ def main():
     recognizer.expect_phrase('play')
     recognizer.expect_phrase('create a playlist named' or 'create playlist named')
     recognizer.expect_phrase('add')
+    recognizer.expect_phrase('stop')
     isPlayInText = re.compile(r'\bplay\b')
+    isStopInText = re.compile(r'^stop')
     
     button = aiy.voicehat.get_button()
     aiy.audio.get_recorder().start()
 
     while True:
         print('Press the button and speak')
+        aiy.audio.say('Waiting for command', volume=60)
         button.wait_for_press()
         print('Listening...')
         text = recognizer.recognize()
@@ -47,9 +48,14 @@ def main():
             print('Sorry, I did not hear you.')
         else:
             print('You said "', text, '"')
+            if 'stop' in text:
+                stop = text.strip()
+                if isStopInText.search(stop) is not None:
+                    print("Stopping cloud speech...")
+                    exit('Cloud speech was stopped.')
             if 'playlist named' in text:
                 head, sep, tail = text.partition('named')
-                aiy.audio.say('Creating playlist named ' + tail)
+                aiy.audio.say('Creating playlist named ' + tail, volume=60)
                 print('Creating playlist named ' + tail + '.')
                 create_playlist(tail.strip())
                 break
@@ -58,13 +64,13 @@ def main():
                     song = text.replace('play', '').replace('by', '').strip()
                     head, sep, tail = song.partition(' ')
                     
-                    aiy.audio.say('Playing ' + head + ' by ' + tail + '.')
+                    aiy.audio.say('Playing ' + head + ' by ' + tail + '.', volume=60)
                     print('Playing ' + head + ' by ' + tail + '.')
                     play_song_by_artist(head, tail)
                     break
                 
                 text = text.replace('play', '').strip()
-                aiy.audio.say('Playing ' + text)
+                aiy.audio.say('Playing ' + text, volume=60)
                 print('Playing ' + text + '.')
                 play_song(text)
                 break
@@ -72,7 +78,7 @@ def main():
                 text = text.replace('add', '')
                 head, sep, tail = text.partition('to')
                 
-                aiy.audio.say('Adding ' + head + ' to ' + tail + '.')
+                aiy.audio.say('Adding ' + head + ' to ' + tail + '.', volume=60)
                 print('Adding ' + head + ' to ' + tail + '.')
                 add_song_to_playlist(head.strip(), tail.strip())
                 break
