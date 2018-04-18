@@ -153,7 +153,6 @@ class OnButtonPress(object):
         print('Button was pressed.')
         global finish
         finish = 1
-        #os._exit(1)
 
 def SongFinished(event):
     global finish
