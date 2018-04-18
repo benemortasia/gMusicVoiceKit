@@ -15,7 +15,7 @@ gpm = Mobileclient()
 
 # MAC helps Google Play Services identify the device
 # *** Change EXAMPLE and PASSWORD to your own Gmail login. ***
-gpm.login('jpage628@gmail.com', '_c0mplex',
+gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
           Mobileclient.FROM_MAC_ADDRESS)
 
 
