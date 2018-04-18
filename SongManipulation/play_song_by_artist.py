@@ -35,10 +35,9 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
         mm.login('/home/pi/oauth.cred')
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
-			song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
+	    song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
             artist_pattern = re.compile(r'(?:.)*\s?(' + re.escape(artist) + r')\s?(?:.)*', re.IGNORECASE)
-            
-			btn = OnButtonPress()
+            btn = OnButtonPress()
             btn.start()
 
             for song in song_dict:
@@ -159,7 +158,6 @@ class OnButtonPress(object):
         print('Button was pressed.')
         global finish
         finish = 1
-        #os._exit(1)
 
 def SongFinished(event):
     global finish
