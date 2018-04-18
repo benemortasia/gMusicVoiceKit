@@ -34,7 +34,7 @@ def add_song_to_playlist(song, playlist_name):
         # compare the playlist name to a user given name
         playlist_pattern = re.compile(r'(?:.)*\s?(' + re.escape(playlist_name) + r')\s?(?:.)*', re.IGNORECASE)
         found = False
-        
+
         for i in playlists:
             # print(i['name'])
 
@@ -49,19 +49,19 @@ def add_song_to_playlist(song, playlist_name):
                     gpm.add_songs_to_playlist(i['id'], temp['storeId'])
                     print("Song " + temp['title'] + " was found, and placed in playlist: " + playlist_name)
                 break
-        
+
         if not found:
             i = create_playlist(playlist_name)
             print(playlist_name + ' was not found, but it was created.')
-            
+
             search = gpm.search(song, 1)
-                
+
             for track in search['song_hits']:
                 temp = dict(track['track'])
                 gpm.add_songs_to_playlist(i, temp['storeId'])
                 print("Song " + temp['title'] + " was found, and placed in playlist: " + playlist_name)
-            
-            
+
+
     Mobileclient.logout(gpm)
 
 # Useful if you want to test this function independently of cloudspeech
