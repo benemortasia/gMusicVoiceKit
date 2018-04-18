@@ -130,18 +130,16 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                         break
 
                 else:
-                    print('Song not found.')
-                    Mobileclient.logout(gpm)
-        			mm.logout()
-                    break
+                    
+                    print('Song not found yet.')
         else:
+          
             print('Looks like you need to authenticate.')
             mm.perform_oauth('/home/pi/oauth.cred')
 
         print('Logging out.')
         Mobileclient.logout(gpm)
         mm.logout()
-
     else:
         print('Mobile client is not authenticated.')
 
