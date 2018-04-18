@@ -7,18 +7,19 @@ from gmusicapi import Mobileclient
 from PlaylistManipulation.create_playlist import create_playlist
 import re
 
-__author__ = "Jordan Page"
-__license__ = "MIT"
-__version__ = "1.0.0"
+__author__ = 'Jordan Page'
+__license__ = 'MIT'
+__version__ = '1.0.1'
 
 gpm = Mobileclient()
 
 # MAC helps Google Play Services identify the device
 # *** Change EXAMPLE and PASSWORD to your own Gmail login. ***
-gpm.login('EXAMPLE@gmail.com', 'PASSWORD', Mobileclient.FROM_MAC_ADDRESS)
+gpm.login('jpage628@gmail.com', '_c0mplex',
+          Mobileclient.FROM_MAC_ADDRESS)
 
 
-def add_song_to_playlist(song="Raindrop Prelude", playlist_name="Default"):
+def add_song_to_playlist(song, playlist_name):
 
     if Mobileclient.is_authenticated(gpm):
 
@@ -63,6 +64,8 @@ def add_song_to_playlist(song="Raindrop Prelude", playlist_name="Default"):
             
     Mobileclient.logout(gpm)
 
-# test    
+# Useful if you want to test this function independently of cloudspeech
+# Replace 'Raindrop Prelude' with some other song you may have
+# and 'Default' with a playlist name
 if __name__ == '__main__':
-    add_song_to_playlist()
+    add_song_to_playlist('Raindrop Prelude', 'Default')
