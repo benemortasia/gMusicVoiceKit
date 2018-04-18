@@ -24,7 +24,7 @@ gpm = Mobileclient()
 # MAC helps Google Play Services identify the device
 # *** Change EXAMPLE and PASSWORD to your own Gmail login. ***
 
-gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
+gpm.login('jpage628@gmail.com', '_c0mplex',
           Mobileclient.FROM_MAC_ADDRESS)
 
 # If using Windows, always 'escape' the backslashes, or we may get special characters
@@ -34,7 +34,7 @@ gpm.login('EXAMPLE@gmail.com', 'PASSWORD',
 song_location = '/home/pi/Music/'
 
 
-def play_song(song='Never Forget'):
+def play_song(song):
     if Mobileclient.is_authenticated(gpm):
         mm = Musicmanager()
         mm.login('/home/pi/oauth.cred')
@@ -173,5 +173,7 @@ def SongFinished(event):
     finish = 1
 
 
+# Useful if you want to test this function independently of cloudspeech
+# Replace 'Never Forget' with some other song you may have
 if __name__ == '__main__':
-    play_song()
+    play_song('Never Forget')
