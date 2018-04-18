@@ -2,12 +2,20 @@
 from gmusicapi import Mobileclient
 from gmusicapi import Musicmanager
 import re
-import os.path
+import os
+import threading
+
+import aiy.assistant.auth_helpers
+from aiy.assistant.library import Assistant
+import aiy.voicehat
+from google.assistant.library.event import EventType
+
 import vlc
+finish = 0
 
 __author__ = "Jordan Page"
 __license__ = "MIT"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 gpm = Mobileclient()
 
@@ -27,10 +35,11 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
         mm.login('/home/pi/oauth.cred')
         if Musicmanager.is_authenticated(mm):
             song_dict = mm.get_purchased_songs()
-
-            # oh boy, here comes the Regex..
-            song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
+			song_pattern = re.compile(r'(?:.)*\s?(' + re.escape(song) + r')\s?(?:.)*', re.IGNORECASE)
             artist_pattern = re.compile(r'(?:.)*\s?(' + re.escape(artist) + r')\s?(?:.)*', re.IGNORECASE)
+            
+			btn = OnButtonPress()
+            btn.start()
 
             for song in song_dict:
                 m = re.match(artist_pattern, song['artist'])
@@ -57,8 +66,26 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                             print(path)
                             print('Playing song.')
                             
-                            p = vlc.MediaPlayer(path)
+                            vlc_instance = vlc.Instance()
+                            
+                            p = vlc_instance.media_player_new()
+                            media = vlc_instance.media_new(path)
+                            
+                            p.set_media(media)
+                            events = p.event_manager()
+                            events.event_attach(vlc.EventType.MediaPlayerEndReached, SongFinished)
                             p.play()
+                            p.audio_set_volume(58)
+                    
+                            while finish == 0:
+                                duration = p.get_time() / 1000
+                                m, s = divmod(duration, 60)
+                            
+                                print("Current song is: ", path)
+                                print("Length:", "%02d:%02d" % (m,s))
+                                time.sleep(5)
+                                
+                            p.stop()
                             break
                         else:
                             with open(path, 'wb') as f:
@@ -66,23 +93,78 @@ def play_song_by_artist(song="Raindrop", artist="Chopin"):
                             print('Song has been added to: ' + path)
                             print('Playing song.')
                             
-                            p = vlc.MediaPlayer(path)
+                            vlc_instance = vlc.Instance()
+                            
+                            p = vlc_instance.media_player_new()
+                            media = vlc_instance.media_new(path)
+                            
+                            p.set_media(media)
+                            events = p.event_manager()
+                            events.event_attach(vlc.EventType.MediaPlayerEndReached, SongFinished)
                             p.play()
+                            p.audio_set_volume(58)
+                            
+                            while finish == 0:
+                                duration = p.get_time() / 1000
+                                m, s = divmod(duration, 60)
+                            
+                                print("Current song is: ", path)
+                                print("Length:", "%02d:%02d" % (m,s))
+                                time.sleep(5)
+                                
+                            p.stop()
                             break
                     except (OSError, IOError):
                         print('An error has occurred.')
                         break
 
                 else:
-                    print('Song not found.')
+                    print('Song not found yet.')
+                    Mobileclient.logout(gpm)
+        			mm.logout()
+                    break
         else:
             print('Looks like you need to authenticate.')
             mm.perform_oauth('/home/pi/oauth.cred')
 
+        print('Logging out.')
         Mobileclient.logout(gpm)
         mm.logout()
+        break
     else:
         print('Mobile client is not authenticated.')
+        break
+
+class OnButtonPress(object):
+    
+    def __init__(self):
+        self._task = threading.Thread(target=self._run_task)
         
+    def start(self):
+        self._task.start()
+    
+    def _run_task(self):
+        print('Button press thread running...')
+        credentials = aiy.assistant.auth_helpers.get_assistant_credentials()
+        with Assistant(credentials) as assistant:
+            self._assistant = assistant
+            for event in assistant.start():
+                self._process_event(event)
+                
+    def _process_event(self, event):
+        if event.type == EventType.ON_START_FINISHED:
+            aiy.voicehat.get_button().on_press(self._on_button_pressed)
+    
+    def _on_button_pressed(_):
+        print('Button was pressed.')
+        global finish
+        finish = 1
+        #os._exit(1)
+
+def SongFinished(event):
+    global finish
+    print("Finished playing song.")
+    finish = 1
+      
 if __name__ == '__main__':
     play_song_by_artist()
