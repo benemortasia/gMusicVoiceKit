@@ -35,7 +35,7 @@ def main():
     recognizer.expect_phrase('stop')
     isPlayInText = re.compile(r'\bplay\b')
     isStopInText = re.compile(r'^stop')
-    
+
     button = aiy.voicehat.get_button()
     aiy.audio.get_recorder().start()
 
@@ -64,12 +64,12 @@ def main():
                 if 'by' in text:
                     song = text.replace('play', '').replace('by', '').strip()
                     head, sep, tail = song.partition(' ')
-                    
+
                     aiy.audio.say('Playing ' + head + ' by ' + tail + '.', volume=60)
                     print('Playing ' + head + ' by ' + tail + '.')
                     play_song_by_artist(head, tail)
                     break
-                
+
                 text = text.replace('play', '').strip()
                 aiy.audio.say('Playing ' + text, volume=60)
                 print('Playing ' + text + '.')
@@ -78,7 +78,7 @@ def main():
             elif 'add' in text:
                 text = text.replace('add', '')
                 head, sep, tail = text.partition('to')
-                
+
                 aiy.audio.say('Adding ' + head + ' to ' + tail + '.', volume=60)
                 print('Adding ' + head + ' to ' + tail + '.')
                 add_song_to_playlist(head.strip(), tail.strip())
