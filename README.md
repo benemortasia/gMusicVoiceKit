@@ -9,7 +9,9 @@ Steps:
 4. In the terminal, navigate to /src ('cd /home/pi/AIY-voice-kit-python/src') and then type 'git clone https://github.com/benemortasia/gMusicVoiceKit'
 5. Take "cloudspeech_demo.py" and replace the one in /home/pi/AIY-voice-kit-python/src/examples/voice ('mv -f /home/pi/AIY-voice-kit-python/src/gMusicVoiceKit/cloudspeech_demo.py /home/pi/AIY-voice-kit-python/src/examples/voice'). This is the main script that interfaces the voice commands with each of the four functions.
 6. If you want to activate the cloudspeech script when the Raspberry Pi starts up, take the "my_cloudspeech.service" file and put it in /lib/systemd/system. It can be deleted otherwise.
+
 6b. Type ‘sudo raspi-config’ in terminal to change the Pi’s settings. Select Boot Settings and Enable Wait for Network at Boot.
+
 6c. Lastly, type ‘sudo systemctl enable my_cloudspeech.service’ in terminal to enable the service at startup.
 7. *** Make sure to change 'EXAMPLE@gmail.com' and 'PASSWORD' in each of the four functions or Google Play Music won't be able to be logged into. This can be done with nano or one of the few Python IDE's included with the Kit.
 8. OAuth will have to be authorized two separate times: once for logging in with gmusicapi for the first time, and once for the button-press-to-stop-the-song mechanic. Just open up the URL and log in with your gmail to authorize it.
