@@ -1,0 +1,16 @@
+[Unit]
+Description=Cloud speech @ reboot
+
+[Service]
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+ExecStart=/bin/bash -c 'python3 -u /home/pi/AIY-voice-kit-python/src/examples/voice/cloudspeech_demo.py'
+WorkingDirectory=/home/pi/AIY-projects-python/src
+Restart=always
+User=pi
+Group=pi
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=cloudspeech
+
+[Install]
+WantedBy=multi-user.target
