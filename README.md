@@ -1,6 +1,6 @@
 # gMusicVoiceKit
 
-gMusicVoiceKit introduces four voice functions to the Voice AIY Kit(https://aiyprojects.withgoogle.com/voice-v1/) which play songs, create playlists, and add songs to playlists through Google Play Music through an already existing API, gmusicapi(https://unofficial-google-music-api.readthedocs.io/en/latest/).
+gMusicVoiceKit introduces four voice functions to the Voice AIY Kit (https://aiyprojects.withgoogle.com/voice-v1/) which play songs, create playlists, and add songs to playlists through Google Play Music through an already existing API, gmusicapi (https://unofficial-google-music-api.readthedocs.io/en/latest/).
 
 Steps:
 1. Follow the directions to build the Voice AIY Kit, if not built already (https://aiyprojects.withgoogle.com/voice-v1/). The gMusicVoiceKit functions are meant for version 1 of the Kit, and may or may not work for the newest version. The credentials part of the set-up is the most annoying part by far.
