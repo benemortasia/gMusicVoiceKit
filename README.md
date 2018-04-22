@@ -4,7 +4,7 @@ gMusicVoiceKit introduces four voice functions to the Voice AIY Kit(https://aiyp
 
 Steps:
 1. Follow the directions to build the Voice AIY Kit, if not built already (https://aiyprojects.withgoogle.com/voice-v1/). The gMusicVoiceKit functions are meant for version 1 of the Kit, and may or may not work for the newest version. The credentials part of the set-up is the most annoying part by far.
-2. Once the Kit is up and running, open up the terminal and enter 'sudo apt-get upgrade' followed by 'sudo apt-get update'.
+2. Once the Kit is up and running, open up the terminal and enter 'sudo apt-get update' followed by 'sudo apt-get upgrade'.
 3. Before I could get gmusicapi to work correctly, something had to be installed regarding lxml. I believe the solution was to install it directly to Python 3 via typing 'sudo apt-get install python3-lxml' in the terminal. After that, the typical installation for gmusicapi can be followed ('sudo pip install gmusicapi').
 4. In the terminal, navigate to /src ('cd /home/pi/AIY-voice-kit-python/src') and then type 'git clone https://github.com/benemortasia/gMusicVoiceKit'
 5. Take "cloudspeech_demo.py" and replace the one in /home/pi/AIY-voice-kit-python/src/examples/voice ('mv -f /home/pi/AIY-voice-kit-python/src/gMusicVoiceKit/cloudspeech_demo.py /home/pi/AIY-voice-kit-python/src/examples/voice'). This is the main script that interfaces the voice commands with each of the four functions.
