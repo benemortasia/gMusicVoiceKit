@@ -43,7 +43,7 @@ def main():
     if sys.argv[1] is not None:
         text = sys.argv[1]
         print("Detected command line argument: " + text)
-    
+
     while True:
         if text is None:
             print('Press the button and speak')
