@@ -27,7 +27,7 @@ def create_playlist(playlist_name):
 
         return gpm.create_playlist(playlist_name)
     else:
-        print("The Mobileclient is not authenticated.")
+        print("Mobileclient could not authenticate.")
 
 
     Mobileclient.logout(gpm)
