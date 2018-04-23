@@ -142,6 +142,7 @@ def play_song_by_artist(song, artist):
 
     else:
         print('Mobile client is not authenticated.')
+        Mobileclient.logout(gpm)
 
 
 class OnButtonPress(object):
