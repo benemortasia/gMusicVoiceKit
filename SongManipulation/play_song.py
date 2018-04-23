@@ -139,6 +139,7 @@ def play_song(song):
         mm.logout()
     else:
         print('Mobileclient could not authenticate.')
+        Mobileclient.logout(gpm)
 
 
 class OnButtonPress(object):
