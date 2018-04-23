@@ -60,7 +60,8 @@ def add_song_to_playlist(song, playlist_name):
                 temp = dict(track['track'])
                 gpm.add_songs_to_playlist(i, temp['storeId'])
                 print("Song " + temp['title'] + " was found, and placed in playlist: " + playlist_name)
-
+    else:
+        print('Mobileclient could not authenticate.')
 
     Mobileclient.logout(gpm)
 
