@@ -45,7 +45,7 @@ def main():
         print("Detected command line argument: " + text)
 
     while True:
-        if not text:
+        if text not in locals():
             print('Press the button and speak')
             aiy.audio.say('Waiting for command', volume=60)
             button.wait_for_press()
