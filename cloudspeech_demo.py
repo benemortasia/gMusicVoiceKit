@@ -40,7 +40,7 @@ def main():
     button = aiy.voicehat.get_button()
     aiy.audio.get_recorder().start()
 
-    if sys.argv[1] is not None:
+    if len(sys.arg) > 1 and sys.argv[1] is not None:
         text = sys.argv[1]
         print("Detected command line argument: " + text)
 
