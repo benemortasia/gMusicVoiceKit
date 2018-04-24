@@ -92,6 +92,7 @@ def main():
                 print('Adding ' + head + ' to ' + tail + '.')
                 add_song_to_playlist(head.strip(), tail.strip())
                 break
+            break
 
 
 if __name__ == '__main__':
