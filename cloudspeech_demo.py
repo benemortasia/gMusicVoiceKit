@@ -40,12 +40,14 @@ def main():
     button = aiy.voicehat.get_button()
     aiy.audio.get_recorder().start()
 
+    text = None
+
     if len(sys.arg) > 1 and sys.argv[1] is not None:
         text = sys.argv[1]
         print("Detected command line argument: " + text)
 
     while True:
-        if text not in locals():
+        if text is not None:
             print('Press the button and speak')
             aiy.audio.say('Waiting for command', volume=60)
             button.wait_for_press()
