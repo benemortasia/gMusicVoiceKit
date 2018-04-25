@@ -71,12 +71,12 @@ def main():
                 break
             elif isPlayInText.search(text) is not None:
                 if 'by' in text:
-                    song = text.replace('play', '').replace('by', '').strip()
-                    head, sep, tail = song.partition(' ')
+                    song = text.replace('play', '').strip()
+                    head, sep, tail = song.partition('by')
 
                     aiy.audio.say('Playing ' + head + ' by ' + tail + '.', volume=60)
                     print('Playing ' + head + ' by ' + tail + '.')
-                    play_song_by_artist(head, tail)
+                    play_song_by_artist(head.strip(), tail.strip())
                     break
 
                 text = text.replace('play', '').strip()
